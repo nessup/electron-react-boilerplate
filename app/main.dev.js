@@ -11,7 +11,11 @@
  * @flow
  */
 import { app, BrowserWindow } from 'electron';
+import unhandled from 'electron-unhandled';
+import { configureStore } from './shared/store/configureStore';
 import MenuBuilder from './menu';
+
+unhandled();
 
 let mainWindow = null;
 
