@@ -12,7 +12,7 @@
  */
 import { app, BrowserWindow } from 'electron';
 import unhandled from 'electron-unhandled';
-import { configureStore } from './shared/store/configureStore';
+import { configureStore } from '../shared/store/configureStore';
 import MenuBuilder from './menu';
 
 unhandled();
@@ -27,7 +27,8 @@ if (process.env.NODE_ENV === 'production') {
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
   require('electron-debug')();
   const path = require('path');
-  const p = path.join(__dirname, '..', 'app', 'node_modules');
+  const p = path.join(__dirname, '..', '..', 'app', 'node_modules');
+  console.log(p);
   require('module').globalPaths.push(p);
 }
 
@@ -64,7 +65,7 @@ app.on('ready', async () => {
   }
 
   // Setup global shared store
-  const initialState = require('./shared/store/initialState');
+  const initialState = require('../shared/store/initialState');
   const store = configureStore({ initialState, scope: 'main' });
 
   mainWindow = new BrowserWindow({
@@ -73,7 +74,7 @@ app.on('ready', async () => {
     height: 728
   });
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
+  mainWindow.loadURL(`file://${__dirname}/../renderer/assets/app.html`);
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event

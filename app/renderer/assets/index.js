@@ -2,8 +2,8 @@ import React from 'react';
 import { routerMiddleware } from 'react-router-redux';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import Root from './renderer/containers/Root';
-import { configureStore } from './shared/store/configureStore';
+import Root from '../containers/Root';
+import { configureStore } from '../../shared/store/configureStore';
 import './app.global.css';
 import { createHashHistory } from 'history';
 
@@ -19,8 +19,8 @@ render(
 );
 
 if (module.hot) {
-  module.hot.accept('./renderer/containers/Root', () => {
-    const NextRoot = require('./renderer/containers/Root'); // eslint-disable-line global-require
+  module.hot.accept('../containers/Root', () => {
+    const NextRoot = require('../containers/Root'); // eslint-disable-line global-require
     render(
       <AppContainer>
         <NextRoot store={store} history={history} />
