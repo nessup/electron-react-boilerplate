@@ -63,6 +63,10 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
+  // Setup global shared store
+  const initialState = require('./shared/store/initialState');
+  const store = configureStore({ initialState, scope: 'main' });
+
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
