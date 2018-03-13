@@ -49,6 +49,13 @@ export default merge.smart(baseConfig, {
     filename: 'renderer.dev.js'
   },
 
+  resolve: {
+    alias: {
+      /* Allows us to hook in a custom theme. Adapted from https://medium.com/webmonkeys/webpack-2-semantic-ui-theming-a216ddf60daf */
+      '../../theme.config$': path.join(__dirname, 'theme/theme.config')
+    }
+  },
+
   module: {
     rules: [
       {
@@ -136,6 +143,45 @@ export default merge.smart(baseConfig, {
           },
           {
             loader: 'sass-loader'
+          }
+        ]
+      },
+      // LESS support - compile all .global.less files and pipe it to style.css
+      {
+        test: /\.global\.(less)$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'less-loader'
+          }
+        ]
+      },
+      // LESS support - compile all other .less files and pipe it to style.css
+      {
+        test: /^((?!\.global).)*\.(less)$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
+            }
+          },
+          {
+            loader: 'less-loader'
           }
         ]
       },

@@ -166,6 +166,8 @@
     "flow-typed": "^2.3.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.1.4",
+    "less": "^2.7.3",
+    "less-loader": "^4.1.0",
     "minimist": "^1.2.0",
     "node-sass": "^4.7.2",
     "npm-logical-tree": "^1.2.1",
@@ -200,6 +202,8 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "semantic-ui-less": "^2.3.0",
+    "semantic-ui-react": "^0.78.3",
     "source-map-support": "^0.5.3"
   },
   "devEngines": {

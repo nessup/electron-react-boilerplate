@@ -22,6 +22,13 @@ export default merge.smart(baseConfig, {
 
   externals: ['fsevents', 'crypto-browserify'],
 
+  resolve: {
+    alias: {
+      /* Allows us to hook in a custom theme. Adapted from https://medium.com/webmonkeys/webpack-2-semantic-ui-theming-a216ddf60daf */
+      '../../theme.config$': path.join(__dirname, 'theme/theme.config')
+    }
+  },
+
   /**
    * Use `module` from `webpack.config.renderer.dev.js`
    */
@@ -115,6 +122,45 @@ export default merge.smart(baseConfig, {
           }
         ]
       },
+      // LESS support - compile all .global.less files and pipe it to style.css
+      {
+        test: /\.global\.(less)$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'less-loader'
+          }
+        ]
+      },
+      // LESS support - compile all other .less files and pipe it to style.css
+      {
+        test: /^((?!\.global).)*\.(less)$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
+            }
+          },
+          {
+            loader: 'less-loader'
+          }
+        ]
+      },
       // WOFF Font
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
@@ -176,7 +222,9 @@ export default merge.smart(baseConfig, {
     renderer: (
       Object
         .keys(dependencies || {})
-        .filter(dependency => dependency !== 'font-awesome')
+        .filter(dependency =>
+          dependency !== 'font-awesome'
+          && dependency !== 'semantic-ui-less')
     )
   },
 
